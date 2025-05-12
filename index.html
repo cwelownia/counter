@@ -6,63 +6,104 @@
   <style>
     body {
       margin: 0;
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
       height: 100vh;
-      background: #f0f0f0;
+      justify-content: space-between;
+      align-items: center;
     }
+
     #counter {
-      font-size: 48px;
-      margin-bottom: 20px;
+      font-size: 5vh;
+      margin-top: 2vh;
     }
-    #clickBtn {
-      font-size: 24px;
-      padding: 20px 40px;
-      border-radius: 50px;
+
+    .button-row {
+      display: flex;
+      gap: 2vw;
+      margin-top: 1vh;
+    }
+
+    .counter-btn {
+      font-size: 2.5vh;
+      padding: 1vh 2vw;
+      border-radius: 3vh;
       border: none;
-      background-color: #007bff;
+      background-color: #4CAF50;
       color: white;
-      margin-bottom: 40px;
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+      cursor: pointer;
+    }
+
+    #bigButton {
+      width: 30vw;
+      height: 10vh;
+      border-radius: 5vh;
+      font-size: 3vh;
+      margin-bottom: 3vh;
+      background-color: #2196F3;
+      color: white;
+      border: none;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
+
   <div id="counter">0</div>
-  <button id="clickBtn">Kliknij mnie</button>
+  <div class="button-row">
+    <button class="counter-btn" onclick="decrease()">-1</button>
+    <button class="counter-btn" onclick="reset()">Reset</button>
+  </div>
+
+  <button id="bigButton" onclick="increase()">Kliknij mnie</button>
 
   <script>
-    // Funkcja do pobierania wartości z cookie
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
     function getCookie(name) {
-      let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-      return match ? parseInt(match[2]) : 0;
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        let c = cookies[i].trim();
+        if (c.indexOf(name + "=") === 0) {
+          return c.substring(name.length + 1);
+        }
+      }
+      return null;
     }
 
-    // Funkcja do ustawiania cookie
-    function setCookie(name, value, days = 365) {
-      let expires = new Date();
-      expires.setTime(expires.getTime() + (days*24*60*60*1000));
-      document.cookie = name + "=" + value + ";expires=" + expires.toUTCString() + ";path=/";
+    let count = parseInt(getCookie("counter")) || 0;
+    const counterDisplay = document.getElementById("counter");
+    counterDisplay.textContent = count;
+
+    function updateCounter() {
+      counterDisplay.textContent = count;
+      setCookie("counter", count, 365);
     }
 
-    let counter = getCookie('licznik');
-    const counterDiv = document.getElementById('counter');
-    const button = document.getElementById('clickBtn');
+    function increase() {
+      count++;
+      updateCounter();
+    }
 
-    counterDiv.textContent = counter;
+    function decrease() {
+      count--;
+      updateCounter();
+    }
 
-    button.addEventListener('click', () => {
-      counter++;
-      counterDiv.textContent = counter;
-      setCookie('licznik', counter);
-    });
+    function reset() {
+      count = 0;
+      updateCounter();
+    }
   </script>
+
 </body>
 </html>
