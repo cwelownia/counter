@@ -5,6 +5,7 @@
   <title>Licznik z przyciskiem</title>
   <style>
     body {
+      background: linear-gradient(to bottom, #2196F3, #0D47A1);
       margin: 0;
       font-family: Arial, sans-serif;
       display: flex;
@@ -12,10 +13,11 @@
       height: 100vh;
       justify-content: space-between;
       align-items: center;
+      overflow-y: hidden;
     }
 
-    #counter {
-      font-size: 5vh;
+    #count {
+      font-size: 12vh;
       margin-top: 2vh;
     }
 
@@ -26,7 +28,7 @@
     }
 
     .counter-btn {
-      font-size: 2.5vh;
+      font-size: 5vh;
       padding: 1vh 2vw;
       border-radius: 3vh;
       border: none;
@@ -36,10 +38,10 @@
     }
 
     #bigButton {
-      width: 30vw;
-      height: 10vh;
+      width: 90vw;
+      height: 30vh;
       border-radius: 5vh;
-      font-size: 3vh;
+      font-size: 7vh;
       margin-bottom: 3vh;
       background-color: #2196F3;
       color: white;
@@ -50,13 +52,13 @@
 </head>
 <body>
 
-  <div id="counter">0</div>
+  <div id="count">Mordo: <div id="counter">0</div></div>
   <div class="button-row">
     <button class="counter-btn" onclick="decrease()">-1</button>
-    <button class="counter-btn" onclick="reset()">Reset</button>
+    <button class="counter-btn" onclick="niereset()"></!--onclick="reset()"--!>Reset</button>
   </div>
 
-  <button id="bigButton" onclick="increase()">Kliknij mnie</button>
+  <button id="bigButton" onclick="increase()">Mordo</button>
 
   <script>
     function setCookie(name, value, days) {
