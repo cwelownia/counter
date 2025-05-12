@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Licznik z przyciskiem</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      height: 100vh;
+      background: #f0f0f0;
+    }
+    #counter {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    #clickBtn {
+      font-size: 24px;
+      padding: 20px 40px;
+      border-radius: 50px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      margin-bottom: 40px;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="counter">0</div>
+  <button id="clickBtn">Kliknij mnie</button>
+
+  <script>
+    // Funkcja do pobierania wartości z cookie
+    function getCookie(name) {
+      let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? parseInt(match[2]) : 0;
+    }
+
+    // Funkcja do ustawiania cookie
+    function setCookie(name, value, days = 365) {
+      let expires = new Date();
+      expires.setTime(expires.getTime() + (days*24*60*60*1000));
+      document.cookie = name + "=" + value + ";expires=" + expires.toUTCString() + ";path=/";
+    }
+
+    let counter = getCookie('licznik');
+    const counterDiv = document.getElementById('counter');
+    const button = document.getElementById('clickBtn');
+
+    counterDiv.textContent = counter;
+
+    button.addEventListener('click', () => {
+      counter++;
+      counterDiv.textContent = counter;
+      setCookie('licznik', counter);
+    });
+  </script>
+</body>
+</html>
